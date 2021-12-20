@@ -823,6 +823,7 @@ export default defineComponent({
       }
     }
 
+    const locales = import.meta.glob('./lang/*.js') 
     async function __loadLang (lang) {
       let langList = {}
       if (lang) {
@@ -841,10 +842,7 @@ export default defineComponent({
         }
         else {
           try {
-            const result = await import(
-              /* webpackChunkName: "[request]" */
-              `@quasar/quasar-ui-qmediaplayer/src/components/lang/${ lang }.js`
-            )
+            const result = await locales[`./lang/${lang}.js`]()
             langList = result.default
           }
           catch (e) {
@@ -867,6 +865,7 @@ export default defineComponent({
       icnSet !== void 0 && icnSet.name !== void 0 && (iconSet.mediaPlayer = { ...icnSet.mediaPlayer })
     }
 
+    const iconSets = import.meta.glob('./icon-set/*.js') 
     async function __loadIconSet (set) {
       let iconsList = {}
       if (set) {
@@ -885,10 +884,7 @@ export default defineComponent({
         }
         else {
           try {
-            const result = await import (
-              /* webpackChunkName: "[request]" */
-              `@quasar/quasar-ui-qmediaplayer/src/components/icon-set/${ set }.js`
-            )
+            const result = await iconSets[`./icon-set/${set}.js`]()
             iconsList = result.default
           }
           catch (e) {
